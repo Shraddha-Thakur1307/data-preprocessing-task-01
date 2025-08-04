@@ -1,0 +1,73 @@
+Customer Personality Analysis: Data Preprocessing
+  This repository documents the data cleaning and preprocessing phase for the Customer Personality Analysis dataset. 
+  The primary goal of this phase is to transform the raw data into a clean, consistent, and analysis-ready format suitable for exploratory data analysis (EDA).
+
+The following steps were performed to prepare the dataset.
+
+Data Preprocessing Pipeline
+The entire data cleaning process was executed in a sequential manner to handle a variety of data quality issues.
+
+1. Initial Data Structuring
+The raw dataset, originally in a text-based format, was loaded and parsed into a structured DataFrame. This initial step involved correctly splitting the data into its respective columns, which laid the groundwork for all subsequent cleaning and analysis tasks.
+
+2. Handling Missing Values
+Upon inspection, the Income column was found to contain several missing entries.
+
+Action Taken: All blank or null entries in the Income column were imputed with the value 0.
+
+Rationale: This initial step ensures that the column is numerically complete. While 0 is a placeholder, it prevents errors in subsequent numerical computations. Further analysis could explore more sophisticated imputation methods like using the mean or median if required.
+
+3. Removal of Unnecessary Columns
+The dataset contained columns that provided no analytical value.
+
+Columns Identified: Z_CostContact and Z_Revenue.
+
+Action Taken: These columns were dropped from the dataset.
+
+Rationale: Both columns contained a single, constant value for all customers. Such features have zero variance and add no discriminatory information for any analytical or modeling task.
+
+4. Harmonization of Categorical Data
+Several categorical columns had inconsistent or nonsensical values that required standardization.
+
+Education:
+
+Issue: The column contained ambiguous categories like "2n Cycle".
+
+Action Taken: These categories were mapped to a standardized and more understandable format (e.g., "Master's" or "Postgraduate"). This ensures that educational achievements are grouped accurately.
+
+Marital_Status:
+
+Issue: The column had overlapping categories ("Married", "Together") and illogical entries ("YOLO", "Absurd", "Alone").
+
+Action Taken:
+
+Overlapping categories like "Married" and "Together" were consolidated into a single category (e.g., "In Relationship").
+
+Nonsensical entries were investigated and mapped to more logical categories (e.g., "Alone" was mapped to "Single") or treated as null values.
+
+5. Correction of Data Types
+To perform correct calculations and analysis, several columns needed their data types to be converted.
+
+Dt_Customer:
+
+Issue: This column, representing the customer's enrollment date, was stored as a text (object) type.
+
+Action Taken: The column was converted to a proper datetime format. This is crucial for any time-series analysis, such as calculating customer tenure.
+
+Income:
+
+Issue: After handling missing values, the column could still be treated as a text/object type if it contained currency symbols or commas.
+
+Action Taken: The Income column was explicitly converted to a numerical (float or int) data type to enable mathematical operations.
+
+6. Duplicate Record Removal
+Ensuring data integrity requires that each record uniquely represents a single entity.
+
+Issue: The dataset was suspected to have duplicate entries for the same customer.
+
+Action Taken: The dataset was checked for duplicate rows based on the customer ID column. All identified duplicates were removed.
+
+Rationale: This step ensures that each customer is represented only once, preventing any skew in the analysis and bias in model training.
+
+Conclusion
+After executing these six steps, the dataset is now considered clean, consistent, and properly formatted. It is now ready for the next stages of the project.
